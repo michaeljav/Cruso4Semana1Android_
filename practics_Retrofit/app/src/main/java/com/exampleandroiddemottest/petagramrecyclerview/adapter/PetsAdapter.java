@@ -15,6 +15,7 @@ import com.exampleandroiddemottest.petagramrecyclerview.DetallePets;
 import com.exampleandroiddemottest.petagramrecyclerview.R;
 import com.exampleandroiddemottest.petagramrecyclerview.db.ConstructorPets;
 import com.exampleandroiddemottest.petagramrecyclerview.pojo.Mascota;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,12 @@ public class PetsAdapter  extends  RecyclerView.Adapter<PetsAdapter.PetsViewHold
             final Mascota mascota = mMascotaArrayLi.get(position);
 
            //   petsViewHolder.imgPhotoMain.setImageResource(mascota.getImageMain());
+//esto es para poder mostrar la foto desde una url y asignarla a un imagenview
+                Picasso.get()
+                        .load(mascota.getUrlFoto())
+                        .placeholder(R.drawable.dos)
+                        .into(petsViewHolder.imgPhotoMain);
+
 //              petsViewHolder.textBoneWhite.setText(mascota.getNamePets());
 //              petsViewHolder.textBoneYellow.setText(String.valueOf(mascota.getLikes()));
                petsViewHolder.tvlikes.setText(String.valueOf(mascota.getLikes()));
@@ -69,6 +76,7 @@ public class PetsAdapter  extends  RecyclerView.Adapter<PetsAdapter.PetsViewHold
                       Intent intent = new Intent(activity, DetallePets.class);
                       intent.putExtra("url",mascota.getUrlFoto());
                       intent.putExtra("like",mascota.getLikes());
+
                       activity.startActivity(intent);
 
                   }

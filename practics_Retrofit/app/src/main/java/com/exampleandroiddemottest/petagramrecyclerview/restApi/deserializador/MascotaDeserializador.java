@@ -40,20 +40,36 @@ public class MascotaDeserializador  implements JsonDeserializer<MascotaResponse>
             String  id = userJson.get(JsonKeys.USER_ID).getAsString();
             String  nombreCompleto = userJson.get(JsonKeys.USER_FULLNAME).getAsString();
 
-            JsonObject imageJSON =  mascotaResponseDataObject.getAsJsonObject(JsonKeys.MEDIA_IMAGES);
-            JsonObject stdResolutionJson = imageJSON.getAsJsonObject(JsonKeys.MEDIA_STANDARD_RESOLUTION);
-            String urlFoto = stdResolutionJson.get(JsonKeys.MEDIA_URL).getAsString();
+           // JsonObject imageJSON =  mascotaResponseDataObject.getAsJsonObject(JsonKeys.MEDIA_IMAGES);
+            JsonArray imageJSONObject  =  mascotaResponseDataObject.getAsJsonArray(JsonKeys.MEDIA_IMAGES_carousel);
 
-            JsonObject  likesJson = mascotaResponseDataObject.getAsJsonObject(JsonKeys.MEDIA_LIKES);
-            int likes = likesJson.get(JsonKeys.MEDIA_LIKES_COUNT).getAsInt();
+                if (   imageJSONObject.size() > 1 ) {
+                    for (int imag = 0; imag < imageJSONObject.size(); imag++) {
 
-            Mascota mascotaActual = new Mascota();
-            mascotaActual.setId(id);
-            mascotaActual.setNombreCompleto(nombreCompleto);
-            mascotaActual.setUrlFoto(urlFoto);
+                        JsonObject  carousel_Object = imageJSONObject.get(imag).getAsJsonObject();
 
-            mascotas.add(mascotaActual);
+                        JsonObject imageJSON=  carousel_Object.getAsJsonObject(JsonKeys.MEDIA_IMAGES);
+                            JsonObject stdResolutionJson = imageJSON.getAsJsonObject(JsonKeys.MEDIA_STANDARD_RESOLUTION);
+                            String urlFoto = stdResolutionJson.get(JsonKeys.MEDIA_URL).getAsString();
 
+                            JsonObject likesJson = mascotaResponseDataObject.getAsJsonObject(JsonKeys.MEDIA_LIKES);
+                            int likes = likesJson.get(JsonKeys.MEDIA_LIKES_COUNT).getAsInt();
+
+                            Mascota mascotaActual = new Mascota();
+                            mascotaActual.setId(id);
+                            mascotaActual.setNombreCompleto(nombreCompleto);
+                            mascotaActual.setUrlFoto(urlFoto);
+                            mascotas.add(mascotaActual);
+
+                                    }
+                                }else   {
+
+                                        Mascota mascotaActual = new Mascota();
+                                        mascotaActual.setId(id);
+                                        mascotaActual.setNombreCompleto(nombreCompleto);
+                                        mascotaActual.setUrlFoto("");
+                                        mascotas.add(mascotaActual);
+                                    }
 
 
         }

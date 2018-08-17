@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class DetallePets extends CreateMenuOpctions {
 
 
@@ -20,18 +22,46 @@ public class DetallePets extends CreateMenuOpctions {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_pets);
+        setContentView(R.layout.activiti_detalle_foto);
 
 
         Bundle extras=  getIntent().getExtras();
         String url = extras.getString(KEY_EXTRA_URL);
-        int likes = extras.getInt(KEY_EXTRA_LIKE);
+         int likes = extras.getInt(KEY_EXTRA_LIKE);
 
-            imgFotoDetalle = findViewById(R.id.imgPhotoMainDetalle);
 
-            tvLikesDetalle = findViewById(R.id.tvlikesDetalle);
+        imgFotoDetalle = findViewById(R.id.imgPhotoMainDetalle);
+//
+//            tvLikesDetalle = findViewById(R.id.tvlikesDetalle);
+//
+//            tvLikesDetalle.setText(String.valueOf(likes));
 
-            tvLikesDetalle.setText(String.valueOf(likes));
+        //esto es para poder mostrar la foto desde una url y asignarla a un imagenview
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.dos)
+                .into(imgFotoDetalle);
+
+
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
        // Toast.makeText(this,"Pulsaste un action view",Toast.LENGTH_SHORT).show();
 //        Toolbar toolbar = findViewById(R.id.miActionBar);
